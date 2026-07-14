@@ -86,6 +86,18 @@ def _sep():
     f = QFrame(); f.setFrameShape(QFrame.HLine)
     f.setStyleSheet("color:#cccccc;"); return f
 
+def _tab_title(text):
+    """Bold centred title bar — sits above the selector in every tab."""
+    w = QWidget()
+    w.setStyleSheet("background:#fafafa; border-bottom:1px solid #e0e0e0;")
+    h = QHBoxLayout(w); h.setContentsMargins(10, 8, 10, 8)
+    lbl = QLabel(text)
+    lbl.setAlignment(Qt.AlignCenter)
+    lbl.setFont(QFont("", 12, QFont.Bold))
+    lbl.setStyleSheet("color:#b71c1c; background:transparent;")
+    h.addWidget(lbl)
+    return w
+
 def _bold(text):
     l = QLabel(text); l.setFont(QFont("", -1, QFont.Bold))
     l.setStyleSheet("color:#0d47a1;"); return l
@@ -225,6 +237,9 @@ class TestDataTab(QWidget):
     def _build(self):
         root = QVBoxLayout(self); root.setSpacing(0); root.setContentsMargins(0,0,0,0)
 
+        # ── title (topmost) ───────────────────────────────────────────
+        root.addWidget(_tab_title("Last Test and Production Data"))
+
         # ── own selector ──────────────────────────────────────────────
         self.selector = FieldSelectorRow()
         self.selector.field_changed.connect(self._on_field)
@@ -246,13 +261,6 @@ class TestDataTab(QWidget):
         ctrl.addWidget(self.load_btn); ctrl.addStretch()
         body_l.addLayout(ctrl)
         body_l.addWidget(_sep())
-
-        # title
-        ttl = QLabel("Last Test and Production Data")
-        ttl.setAlignment(Qt.AlignCenter)
-        ttl.setFont(QFont("",12,QFont.Bold))
-        ttl.setStyleSheet("color:#b71c1c; margin:2px 0;")
-        body_l.addWidget(ttl)
 
         # General data
         gen = QGroupBox("General Data"); gg = self._grid()
@@ -436,15 +444,15 @@ class MonthlyProductionTab(QWidget):
     def _build(self):
         root=QVBoxLayout(self); root.setSpacing(0); root.setContentsMargins(0,0,0,0)
 
+        root.addWidget(_tab_title("Monthly Field Production"))
+
         self.selector=FieldSelectorRow()
         self.selector.field_changed.connect(self._on_field)
         root.addWidget(self.selector)
 
         body=QWidget(); bl=QVBoxLayout(body); bl.setSpacing(10); bl.setContentsMargins(20,14,20,14)
 
-        ttl=QLabel("Monthly Field Production"); ttl.setAlignment(Qt.AlignCenter)
-        ttl.setFont(QFont("",12,QFont.Bold)); ttl.setStyleSheet("color:#b71c1c;")
-        bl.addWidget(ttl); bl.addWidget(_sep())
+        bl.addWidget(_sep())
 
         dr=QHBoxLayout(); dr.addWidget(QLabel("<b>Production Month:</b>"))
         self.date_w=PersianDateWidget(); dr.addWidget(self.date_w)
@@ -509,15 +517,15 @@ class AllocationTab(QWidget):
     def _build(self):
         root=QVBoxLayout(self); root.setSpacing(0); root.setContentsMargins(0,0,0,0)
 
+        root.addWidget(_tab_title("Production Allocation"))
+
         self.selector=FieldSelectorRow()
         self.selector.field_changed.connect(self._on_field)
         root.addWidget(self.selector)
 
         body=QWidget(); bl=QVBoxLayout(body); bl.setSpacing(10); bl.setContentsMargins(16,12,16,12)
 
-        ttl=QLabel("Production Allocation"); ttl.setAlignment(Qt.AlignCenter)
-        ttl.setFont(QFont("",12,QFont.Bold)); ttl.setStyleSheet("color:#b71c1c;")
-        bl.addWidget(ttl); bl.addWidget(_sep())
+        bl.addWidget(_sep())
 
         top=QHBoxLayout(); top.addWidget(QLabel("<b>Allocation Month:</b>"))
         self.date_w=PersianDateWidget(); top.addWidget(self.date_w)
@@ -601,15 +609,15 @@ class DatabaseTab(QWidget):
     def _build(self):
         root=QVBoxLayout(self); root.setSpacing(0); root.setContentsMargins(0,0,0,0)
 
+        root.addWidget(_tab_title("Database Viewer"))
+
         self.selector=FieldSelectorRow()
         self.selector.field_changed.connect(self._on_field)
         root.addWidget(self.selector)
 
         body=QWidget(); bl=QVBoxLayout(body); bl.setSpacing(6); bl.setContentsMargins(8,8,8,8)
 
-        ttl=QLabel("Database Viewer"); ttl.setAlignment(Qt.AlignCenter)
-        ttl.setFont(QFont("",12,QFont.Bold)); ttl.setStyleSheet("color:#b71c1c;")
-        bl.addWidget(ttl); bl.addWidget(_sep())
+        bl.addWidget(_sep())
 
         br=QHBoxLayout()
         self.btn_test=QPushButton("Test Table"); self.btn_test.setCheckable(True)
@@ -728,14 +736,14 @@ class ReportTab(QWidget):
     def _build(self):
         root=QVBoxLayout(self); root.setSpacing(0); root.setContentsMargins(0,0,0,0)
 
+        root.addWidget(_tab_title("Report Generation"))
+
         self.selector=FieldSelectorRow()
         self.selector.field_changed.connect(self._on_field)
         root.addWidget(self.selector)
 
         body=QWidget(); bl=QVBoxLayout(body); bl.setSpacing(10); bl.setContentsMargins(16,12,16,12)
-        ttl=QLabel("Report Generation"); ttl.setAlignment(Qt.AlignCenter)
-        ttl.setFont(QFont("",12,QFont.Bold)); ttl.setStyleSheet("color:#b71c1c;")
-        bl.addWidget(ttl); bl.addWidget(_sep())
+        bl.addWidget(_sep())
 
         grp=QGroupBox("Report Options"); frm=QFormLayout()
         frm.setLabelAlignment(Qt.AlignRight); frm.setSpacing(10); frm.setContentsMargins(20,12,20,12)
